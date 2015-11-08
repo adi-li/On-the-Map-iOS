@@ -18,12 +18,12 @@ class MapViewController: LoggedInViewController, MKMapViewDelegate {
     
     override func didLoadLocations() {
         mapView.removeAnnotations(mapView.annotations)
-        for location in StudentLocation.locations {
+        for location in StudentInformation.locations {
             self.addPinWithLocation(location)
         }
     }
     
-    func addPinWithLocation(location: StudentLocation) {
+    func addPinWithLocation(location: StudentInformation) {
         let pin = MKPointAnnotation()
         pin.coordinate = location.coordinate
         pin.title = location.studentName

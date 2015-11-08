@@ -25,7 +25,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
     
     @IBOutlet weak var submitButton: UIButton!
     
-    let location = StudentLocation()
+    var location = StudentInformation()
     let geocoder = CLGeocoder()
     
     override func viewDidLoad() {
@@ -59,7 +59,14 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
     func didEnterLocation() {
         let mapString = locationField.text!
         
+        // Show loading view
+        loadingView.hidden = false
+        
+        // Geocoding address
         geocoder.geocodeAddressString(mapString) { (placemarks, error) -> Void in
+            // Hide loading view
+            self.loadingView.hidden = true
+            
             guard error == nil || placemarks?.count > 0 else {
                 UIAlertController.alertControllerWithTitle("Cannot find address", message: error!.localizedDescription).showFromViewController(self)
                 return
@@ -95,16 +102,21 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
     // MARK: - Save location
     
     func saveLocation() {
+        // Show loading view
         loadingView.hidden = false
+        
         location.save { (error) -> Void in
+            // Hide loading view
             self.loadingView.hidden = true
+            
+            // Check error
             guard error == nil else {
                 UIAlertController.alertControllerWithTitle("Error", message: error?.localizedDescription).showFromViewController(self)
                 return
             }
             
             // refresh locations and dismiss self
-            StudentLocation.allLocations(true, completion: { (locations, error) -> Void in
+            StudentInformation.allLocations(true, completion: { (locations, error) -> Void in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.dismissViewControllerAnimated(true, completion: nil)
                 })

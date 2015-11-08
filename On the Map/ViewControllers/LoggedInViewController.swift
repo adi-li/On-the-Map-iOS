@@ -23,7 +23,7 @@ class LoggedInViewController: UIViewController {
         ]
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "didLoadLocations",
-            name: StudentLocationDidFetchNotificationName, object: nil)
+            name: StudentInformationDidFetchNotificationName, object: nil)
         
         refreshPins(nil)
     }
@@ -60,7 +60,12 @@ class LoggedInViewController: UIViewController {
     func refreshPins(sender: UIBarButtonItem?) {
         let forceUpdate = (sender != nil)  // Force update if pressing button
         
-        StudentLocation.allLocations(forceUpdate, completion: nil)
+        StudentInformation.allLocations(forceUpdate) { (locations, error) -> Void in
+            guard error == nil else {
+                UIAlertController.alertControllerWithTitle("Error", message: "Cannot download locations").showFromViewController(self)
+                return
+            }
+        }
     }
     
     // MARK: - Override for custom actions

@@ -26,13 +26,13 @@ class LocationListViewController: LoggedInViewController, UITableViewDataSource,
     // MARK: - UITableViewDataSource
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return StudentLocation.locations.count
+        return StudentInformation.locations.count
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(LocationCell.Identifier, forIndexPath: indexPath) as! LocationCell
         
-        cell.nameLabel.text = StudentLocation.locations[indexPath.row].studentName
+        cell.nameLabel.text = StudentInformation.locations[indexPath.row].studentName
 
         return cell
     }
@@ -42,7 +42,7 @@ class LocationListViewController: LoggedInViewController, UITableViewDataSource,
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
-        let location = StudentLocation.locations[indexPath.row]
+        let location = StudentInformation.locations[indexPath.row]
         
         guard let URL = location.mediaURL else {
             return

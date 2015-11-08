@@ -10,11 +10,11 @@ import Foundation
 import MapKit
 
 
-let StudentLocationDidFetchNotificationName = "StudentLocationDidFetchNotification"
+let StudentInformationDidFetchNotificationName = "StudentInformationDidFetchNotification"
 
-class StudentLocation: NSObject {
+struct StudentInformation {
     
-    class var ErrorDomain: String { return "StudentLocationErrorDomain" }
+    static let ErrorDomain = "StudentInformationErrorDomain"
     
     // MARK: - Properties
     
@@ -29,8 +29,11 @@ class StudentLocation: NSObject {
     
     // MARK: - Init
     
-    convenience init(dictionary: [String: AnyObject]) {
-        self.init()
+    init() {
+        
+    }
+    
+    init(dictionary: [String: AnyObject]) {
         objectID = dictionary["objectId"] as? String
         
         uniqueKey = dictionary["uniqueKey"] as? String ?? ""
@@ -67,7 +70,7 @@ class StudentLocation: NSObject {
     
     // MARK: - Save
     
-    func save(completion: ((NSError?) -> Void)?) {
+    mutating func save(completion: ((NSError?) -> Void)?) {
         // Add user detail
         UdacitySession.currentSession.user!.refresh() { (error) -> Void in
             guard error == nil else {
@@ -85,7 +88,7 @@ class StudentLocation: NSObject {
         }
     }
     
-    private func _saveToParse(completion: ((NSError?) -> Void)?) {
+    private mutating func _saveToParse(completion: ((NSError?) -> Void)?) {
         // Check existing location
         ParseAPIClient.client.getLocationByKey(uniqueKey) { (data, error) -> Void in
             guard error == nil else {
@@ -142,13 +145,13 @@ class StudentLocation: NSObject {
     
     // MARK: - Get locations
     
-    private(set) static var locations = [StudentLocation]()
+    private(set) static var locations = [StudentInformation]()
     
-    class func allLocations(completion: (([StudentLocation]?, NSError?) -> Void)?) {
+    static func allLocations(completion: (([StudentInformation]?, NSError?) -> Void)?) {
         allLocations(false, completion: completion)
     }
     
-    class func allLocations(forceUpdate: Bool, completion: (([StudentLocation]?, NSError?) -> Void)?) {
+    static func allLocations(forceUpdate: Bool, completion: (([StudentInformation]?, NSError?) -> Void)?) {
             
         // If there is cached results, return it immediately
         if locations.count > 0 && !forceUpdate {
@@ -172,13 +175,13 @@ class StudentLocation: NSObject {
             locations.removeAll()
             
             for locationDict in results {
-                let location = StudentLocation(dictionary: locationDict)
+                let location = StudentInformation(dictionary: locationDict)
                 locations.append(location)
             }
             
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 NSNotificationCenter.defaultCenter().postNotification(
-                    NSNotification(name: StudentLocationDidFetchNotificationName, object: self))
+                    NSNotification(name: StudentInformationDidFetchNotificationName, object: nil))
             })
             
             completion?(locations, nil)
