@@ -9,12 +9,14 @@
 import UIKit
 import MapKit
 import CoreLocation
+import SafariServices
 
 class InformationPostingViewController: UIViewController, UITextFieldDelegate, MKMapViewDelegate {
 
     @IBOutlet weak var enterURLView: UIView!
     @IBOutlet weak var URLField: UITextField!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var previewURLButton: UIButton!
     
     @IBOutlet weak var enterLocationView: UIView!
     @IBOutlet weak var questionLabel: UILabel!
@@ -56,6 +58,14 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         dismissViewControllerAnimated(true, completion: nil)
     }
 
+    @IBAction func previewURL(sender: UIButton) {
+        guard let URL = URLField.text?.HTTPURL else {
+            return
+        }
+        
+        presentViewController(SFSafariViewController(URL: URL), animated: true, completion: nil)
+    }
+    
     func didEnterLocation() {
         let mapString = locationField.text!
         
@@ -68,7 +78,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
             self.loadingView.hidden = true
             
             guard error == nil || placemarks?.count > 0 else {
-                UIAlertController.alertControllerWithTitle("Cannot find address", message: error!.localizedDescription).showFromViewController(self)
+                UIAlertController.alertControllerWithTitle("Geocoding Error", message: "Address not found").showFromViewController(self)
                 return
             }
             
@@ -180,4 +190,11 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         textField.resignFirstResponder()
         return true
     }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        let newText = (textField.text! as NSString).stringByReplacingCharactersInRange(range, withString: string)
+        previewURLButton.enabled = newText.isValidHTTPURL
+        return true
+    }
+    
 }

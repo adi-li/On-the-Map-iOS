@@ -47,7 +47,7 @@ class APIClient: NSObject {
             })
             
             // Error handle
-            if error != nil {
+            guard error == nil else {
                 completion?(data: nil, error: error)
                 return
             }

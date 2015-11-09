@@ -73,10 +73,17 @@ class LogInViewController: UIViewController, UITextFieldDelegate {
             
             // Show error message if error exists
             guard error == nil else {
-                var message = "Invalid email and password combination."
-                if let err = error?.userInfo["Data"]?["error"] as? String {
-                    message = err
+                var message = "Unexpected error"
+                
+                switch error!.domain {
+                case UdacityAPIClient.ErrorDomain:
+                    if let err = error?.userInfo["Data"]?["error"] as? String {
+                        message = err
+                    }
+                default:
+                    message = error!.localizedDescription
                 }
+                
                 UIAlertController.alertControllerWithTitle(errorTitle, message: message).showFromViewController(self)
                 return
             }

@@ -18,6 +18,9 @@
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
             <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
+            <string>Roboto-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -48,7 +51,7 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g5O-QH-zBL" customClass="TextField" customModule="On_the_Map" customModuleProvider="target">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="g5O-QH-zBL" customClass="TextField" customModule="On_the_Map" customModuleProvider="target">
                                 <rect key="frame" x="40" y="156" width="520" height="43"/>
                                 <animations/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.79658467060000004" colorSpace="calibratedRGB"/>
@@ -262,7 +265,16 @@
                             <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c88-E9-Ldk" userLabel="Enter URL view">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="URL" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WPJ-YJ-9dx" userLabel="URL field">
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jer-z5-A7n">
+                                        <rect key="frame" x="10" y="10" width="85" height="30"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
+                                        <state key="normal" title="Preview URL"/>
+                                        <connections>
+                                            <action selector="previewURL:" destination="JcK-gC-Kd7" eventType="touchUpInside" id="BJg-18-Hf8"/>
+                                        </connections>
+                                    </button>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Please enter your URL here" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="WPJ-YJ-9dx" userLabel="URL field">
                                         <rect key="frame" x="0.0" y="40" width="600" height="100"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.55933902140000002" green="0.84924958880000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -287,11 +299,13 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="7he-uA-4AU" secondAttribute="trailing" id="0IK-2u-G6n"/>
                                     <constraint firstItem="7he-uA-4AU" firstAttribute="top" secondItem="WPJ-YJ-9dx" secondAttribute="bottom" id="0cx-l4-psu"/>
+                                    <constraint firstItem="Jer-z5-A7n" firstAttribute="top" secondItem="c88-E9-Ldk" secondAttribute="top" constant="10" id="Es0-XA-Hsf"/>
                                     <constraint firstItem="7he-uA-4AU" firstAttribute="leading" secondItem="c88-E9-Ldk" secondAttribute="leading" id="I7r-7h-puO"/>
                                     <constraint firstItem="WPJ-YJ-9dx" firstAttribute="leading" secondItem="c88-E9-Ldk" secondAttribute="leading" id="KlV-rP-neo"/>
                                     <constraint firstAttribute="trailing" secondItem="WPJ-YJ-9dx" secondAttribute="trailing" id="ddv-zi-YuI"/>
                                     <constraint firstItem="WPJ-YJ-9dx" firstAttribute="top" secondItem="c88-E9-Ldk" secondAttribute="top" constant="40" id="wQX-Sz-DOr"/>
                                     <constraint firstAttribute="bottom" secondItem="7he-uA-4AU" secondAttribute="bottom" id="wbk-JL-m1u"/>
+                                    <constraint firstItem="Jer-z5-A7n" firstAttribute="leading" secondItem="c88-E9-Ldk" secondAttribute="leading" constant="10" id="xC9-eX-rBk"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sPZ-xE-KDg" userLabel="Enter Location view">
@@ -307,7 +321,7 @@
                                         <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="Location" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fPO-cQ-54I" userLabel="Location field">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" placeholder="Please enter your location here" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fPO-cQ-54I" userLabel="Location field">
                                         <rect key="frame" x="0.0" y="120" width="600" height="366"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.55933902140000002" green="0.84924958880000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -330,8 +344,9 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WUI-eH-ruj">
-                                <rect key="frame" x="532" y="28" width="48" height="30"/>
+                                <rect key="frame" x="544" y="28" width="46" height="30"/>
                                 <animations/>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                 <state key="normal" title="Cancel"/>
                                 <connections>
                                     <action selector="cancel:" destination="JcK-gC-Kd7" eventType="touchUpInside" id="wrn-rI-qal"/>
@@ -341,6 +356,7 @@
                                 <rect key="frame" x="225" y="538" width="151" height="32"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="18"/>
                                 <inset key="contentEdgeInsets" minX="10" minY="5" maxX="10" maxY="5"/>
                                 <state key="normal" title="Find on the Map">
                                     <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -364,6 +380,7 @@
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="0.5" alpha="0.80313027871621623" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="85M-hd-m04" firstAttribute="centerY" secondItem="bry-sf-ydT" secondAttribute="centerY" id="Hmb-6j-wJP"/>
                                     <constraint firstItem="85M-hd-m04" firstAttribute="centerX" secondItem="bry-sf-ydT" secondAttribute="centerX" id="jiS-4z-9J1"/>
@@ -371,7 +388,7 @@
                             </view>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="c88-E9-Ldk" secondAttribute="trailing" id="2Zj-Ee-IcB"/>
                             <constraint firstItem="bry-sf-ydT" firstAttribute="top" secondItem="bXa-xP-evk" secondAttribute="bottom" id="70i-WN-KAN"/>
@@ -380,7 +397,7 @@
                             <constraint firstItem="WUI-eH-ruj" firstAttribute="top" secondItem="bXa-xP-evk" secondAttribute="bottom" constant="8" id="I2F-bf-OxU"/>
                             <constraint firstItem="sPZ-xE-KDg" firstAttribute="top" secondItem="bXa-xP-evk" secondAttribute="bottom" id="ITG-4d-6fT"/>
                             <constraint firstItem="yq1-h5-WVO" firstAttribute="centerX" secondItem="xj8-QY-BED" secondAttribute="centerX" id="O6d-3h-qZO"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="WUI-eH-ruj" secondAttribute="trailing" id="RDI-0e-Tnw"/>
+                            <constraint firstAttribute="trailing" secondItem="WUI-eH-ruj" secondAttribute="trailing" constant="10" id="RDI-0e-Tnw"/>
                             <constraint firstItem="c88-E9-Ldk" firstAttribute="leading" secondItem="xj8-QY-BED" secondAttribute="leading" id="Uee-iJ-QhC"/>
                             <constraint firstAttribute="trailing" secondItem="sPZ-xE-KDg" secondAttribute="trailing" id="bEm-cu-SQp"/>
                             <constraint firstItem="68f-K9-kQT" firstAttribute="top" secondItem="c88-E9-Ldk" secondAttribute="bottom" id="cAk-T6-ykp"/>
@@ -399,6 +416,7 @@
                         <outlet property="loadingView" destination="bry-sf-ydT" id="gME-gb-Aod"/>
                         <outlet property="locationField" destination="fPO-cQ-54I" id="ZAA-hL-DbU"/>
                         <outlet property="mapView" destination="7he-uA-4AU" id="edL-8Z-EsL"/>
+                        <outlet property="previewURLButton" destination="Jer-z5-A7n" id="9ZW-GM-C15"/>
                         <outlet property="questionLabel" destination="n5I-a0-BAE" id="Mwf-SP-usN"/>
                         <outlet property="submitButton" destination="yq1-h5-WVO" id="hfd-mb-8X2"/>
                     </connections>
